@@ -1,0 +1,35 @@
+{% extends 'forum/base.html' %}
+
+{% block block1 %}
+
+{% for thread in threads %}
+<div class="category">
+    <div class="category1">
+        <div>Категория: {{ thread.category_id.name_category }}</div>
+        <div>Автор:{{ thread.user_id.username }}</div>
+    </div>
+
+    <p style="font-family: 'JetBrains Mono';font-style: normal;font-weight: 400;
+    font-size: 20px;line-height: 30px;color: #000000;">{{ thread.name_tread }}
+    </p>
+
+    <span style="margin-bottom:20px;font-family: 'JetBrains Mono';
+    font-style: normal;font-weight: 400;font-size: 15px;line-height: 20px;color: #000000;">
+        {{ thread.text_thread|truncatechars:450 }}
+    </span>
+
+    <a href="{% url 'thread' thread.pk %}" style="text-decoration:none;text-align:center">
+        <div style="box-sizing:border-box;width:15%;height:30px;background:#B91F1F;border:2px solid white;text-align:center;padding:3px;color:white;">Подробнее</div>
+    </a>
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+    <br>
+    <a href="{% url 'thread_delete' thread.pk %}" style="text-decoration:none;text-align:center">
+        <div style="box-sizing:border-box;width:15%;height:30px;background:#B91F1F;border:2px solid white;text-align:center;padding:3px;color:white;">Удалить</div>
+    </a>
+    {% endif %}
+</div>
+{% endfor %}
+    <a href="{% url 'thread_create' %}">
+    ДОБАВИТЬ ОБСУЖДЕНИЕ
+    </a>
+{% endblock block1 %}

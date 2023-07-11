@@ -1,0 +1,22 @@
+{% extends 'aboutmyself/base.html' %}
+{% block block1 %}
+
+{% if user.is_authenticated %}
+
+    <form method="post" style="background:#E5D3C1;border-box:box-sizing;padding-left:15px;padding-bottom:15px;">
+        {% csrf_token %}
+        {% for f in form %}
+       <div style="margin-top:15px;margin-bottom:15px;" class="inner_form">
+           {{ f.label_tag }}
+           {{ f }}
+        </div>
+        {% endfor %}
+        <button type="submit">Применить</button>
+    </form>
+
+{% else %}
+<span>Вы не можете просматривать данную страницу</span>
+{% endif %}
+
+
+{% endblock block1 %}

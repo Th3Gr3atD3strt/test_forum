@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'forum/css/style.css' %}" rel="stylesheet">
+    <!-- С ЭТИМ ПУТЁМ ВСЁ ЧЁТКО, ОБРАЗЕЦ!!!! -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    {% if request.user.is_active %}
+        <div style="width:70%; display:flex; justify-content: space-evenly; flex-direction:column">
+            <a class="footer_text" href="{% url 'logout' %}">Выйти из аккаунта</a>
+        </div>
+    {% else %}
+        <div style="width:70%; display:flex; justify-content: space-evenly; flex-direction:column">
+            <a class="footer_text" href="{% url 'login' %}">Войти в аккаунт</a>
+        </div>
+    {% endif %}
+
+    {% if request.user %}
+        ЗДАРОВА, {{ request.user.username }}
+    {% endif %}
+</header>
+<div class="main">
+    {% if messages %}
+        {% for msg in messages %}
+            {{ msg }}
+        {% endfor %}
+    {% endif %}
+    <div class="main2">
+    {% block block1 %}
+    {% endblock block1 %}
+    </div>
+
+</div>
+
+<footer>
+    <div style="width:70%; display:flex; justify-content: space-evenly; flex-direction:column">
+        <p class="footer_text">2022, Виктор Елсаков</p>
+    </div>
+    <div style="display:flex; justify-content: space-evenly; flex-direction:column">
+    <p style="margin:4px;">
+        <a href="mailto:vitya.elsakov@gmail.com" class="footer_text">vitya.elsakov@gmail.com</a>
+    </p>
+    <p style="margin:4px;">
+        <a href="https://t.me/Th3Gr3atD3stroyer" class="footer_text">@Th3Gr3atD3stroyer</a>
+    </p>
+    </div>
+</footer>
+
+</body>
+</html>

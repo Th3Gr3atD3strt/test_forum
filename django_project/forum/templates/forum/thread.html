@@ -1,0 +1,62 @@
+{% extends 'forum/base.html' %}
+{% block block1 %}
+
+{% if user.is_authenticated %}
+
+<div class="category">
+    <div class="category1">
+        <div>Категория: {{ question.category_id.name_category }}</div>
+        <div>Автор:{{ question.user_id.username }} </div>
+    </div>
+
+    <p style="font-family: 'JetBrains Mono';font-style: normal;font-weight: 400;
+    font-size: 20px;line-height: 30px;color: #000000;">{{ question.name_tread }}
+    </p>
+
+    <span style="margin-bottom:20px;font-family: 'JetBrains Mono';
+    font-style: normal;font-weight: 400;font-size: 15px;line-height: 20px;color: #000000;">
+        {{ question.text_thread }}
+    </span>
+
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+    <br>
+    <a href="{% url 'thread_delete' question.id %}" style="text-decoration:none;text-align:center">
+        <div style="box-sizing:border-box;width:15%;height:30px;background:#B91F1F;border:2px solid white;text-align:center;padding:3px;color:white;">Удалить</div>
+    </a>
+    {% endif %}
+</div>
+
+{% for answer in answers %}
+<div class="category">
+    <div class="category1">
+        <div>Ответ на пост: {{ answer.thread_id.name_tread|truncatewords:2}}</div>
+        <div>Автор:{{ answer.user_id.username }}</div>
+    </div>
+
+    <p style="font-family: 'JetBrains Mono';font-style: normal;font-weight: 400;
+    font-size: 20px;line-height: 30px;color: #000000;">{{ answer.name_tread }}
+    </p>
+
+    <span style="margin-bottom:20px;font-family: 'JetBrains Mono';
+    font-style: normal;font-weight: 400;font-size: 15px;line-height: 20px;color: #000000;">
+        {{ answer.text_area }}
+    </span>
+
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+    <br>
+    <a href="{% url 'answer_delete' answer.pk %}" style="text-decoration:none;text-align:center">
+        <div style="box-sizing:border-box;width:15%;height:30px;background:#B91F1F;border:2px solid white;text-align:center;padding:3px;color:white;">Удалить</div>
+    </a>
+    {% endif %}
+</div>
+{% endfor %}
+<div class="category">
+    <div class="category1">
+        <a href="{% url 'answer_create' question.pk %}" style="color: white">Добавить ответ на обсуждение </a>
+    </div>
+</div>
+{% else %}
+    ТЕБЕ НАДО ПОДТВЕРДИТЬ СВОЙ АККАУНТ!!!!
+{% endif %}
+
+{% endblock block1 %}
